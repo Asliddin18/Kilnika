@@ -72,6 +72,7 @@ app.post("/users", (req, res) => {
      telNumber: telNumber,
      comment: comment !== "" ? [
       {
+       id: uuid.v4(),
        day: day,
        month: month,
        year: year,
@@ -141,6 +142,7 @@ app.post("/comment/:id", (req, res) => {
  const hour = `${date.getHours()}:${date.getMinutes()}`
 
  var data = {
+  id: uuid.v4(),
   day: day,
   month: month,
   year: year,
@@ -156,6 +158,19 @@ app.post("/comment/:id", (req, res) => {
  fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
  res.status(200).send("yuborildi")
 })
+app.delete('/comment/:id',(req,res)=>{
+    var id=red.params.id
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    for (var i = 0; i < UserData.length; i++) {
+        for (let j = 0; j < UserData[i].comment.length; j++) {
+            if(UserData[i].comment[j].id==id){
+                UserData[i].comment.splice(j,1)
+            }
+        }
+    }
+
+})
+
 app.listen(8080, () => {
  console.log("The Server is Running");
 })
