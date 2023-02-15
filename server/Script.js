@@ -107,8 +107,69 @@ app.post("/login",(req, res) => {
     }
 })
 
+/* history */
+app.get("/history", (req, res) => {
+    const historyJson = JSON.parse(fs.readFileSync("./data/History.json", "utf-8"))
+    res.status(200).send(historyJson)
+})
+app.post("/history", (req, res) => {
+    const historyJson = JSON.parse(fs.readFileSync("./data/History.json", "utf-8"))
+    const date = new Date()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const year = date.getFullYear()
+    const hour = `${date.getHours()}:${date.getMinutes()}`
+    const fullDate = `${day < 10 ? "0" + day : day}/${month < 10 ? "0" + month : month}/${year}`
+    const name = req.body.name
+    const pages = req.body.page
+
+    if(name === "" || pages === "") {
+        res.status(400).send("Name or pages is Empty") 
+    } else {
+        var newHistory = {
+            name: name,
+            date: fullDate,
+            hour: hour,
+            pages: pages
+        }
+        historyJson.unshift(newHistory)
+        fs.writeFileSync("./data/History.json", JSON.stringify(historyJson, null, 2))
+        res.status(201).send("History Created")
+    }
+
+})
+
+/* price */
+app.get("/price", (req, res) => {
+    const price = JSON.parse(fs.readFileSync("./data/Sum.json", "utf-8"))
+    res.status(200).send(price)
+})
+app.put("/price/:id", (req, res) => {
+    const priceJson = JSON.parse(fs.readFileSync("./data/Sum.json", "utf-8"))
+    const newPrice = req.body.price
+
+    priceJson.map(item => {
+        if (item.id === req.params.id) {
+            if (newPrice === '') {
+                item.price
+            } else {
+                item.price = newPrice
+            }
+            fs.writeFileSync("./data/Sum.json", JSON.stringify(priceJson, null, 2))
+            res.status(200).send('Price Has Been Changed')
+        } else {
+            res.status(400).send("Id Not Found")
+        }
+    })
+
+})
 
 
+/* users */
+app.get("/users", (req, res) => {
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    res.status(200).send(UserData)
+})
 app.post("/users", (req, res) => {
     const priceData = JSON.parse(fs.readFileSync("./data/Sum.json", "utf-8"))
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
@@ -211,32 +272,6 @@ app.post("/users", (req, res) => {
         }
     }
 })
-
-app.get("/price", (req, res) => {
-    const price = JSON.parse(fs.readFileSync("./data/Sum.json", "utf-8"))
-    res.status(200).send(price)
-})
-
-app.put("/price/:id", (req, res) => {
-    const priceJson = JSON.parse(fs.readFileSync("./data/Sum.json", "utf-8"))
-    const newPrice = req.body.price
-
-    priceJson.map(item => {
-        if (item.id === req.params.id) {
-            if (newPrice === '') {
-                item.price
-            } else {
-                item.price = newPrice
-            }
-            fs.writeFileSync("./data/Sum.json", JSON.stringify(priceJson, null, 2))
-            res.status(200).send('Price Has Been Changed')
-        } else {
-            res.status(400).send("Id Not Found")
-        }
-    })
-
-})
-
 app.get("/comment", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     var comments = []

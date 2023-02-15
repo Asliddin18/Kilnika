@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "21853b1d-073d-4403-8d35-18cb6936b490",
+    "username": "abbas",
+    "surname": "basasda",
+    "age": "16",
+    "passportSer": "TV",
+    "passportNum": "123124",
+    "telNumber": "132124123",
+    "comment": [
+      {
+        "day": 15,
+        "month": 2,
+        "year": 2023,
+        "hour": "18:29",
+        "message": "asdad"
+      }
+    ],
+    "dedline": "asda",
+    "analiz": [],
+    "skidka": 0,
+    "startDay": [
+      {
+        "started": "",
+        "stay": "",
+        "room": "",
+        "daily": "",
+        "money": ""
+      }
+    ]
+  }
+]
