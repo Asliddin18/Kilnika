@@ -13,6 +13,7 @@ app.use(cors())
 app.use(upload())
 
 /* start Operator */
+ 
 app.get("/operator", (req, res) => {
     const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json", "utf-8"))
     res.status(200).send(operatorJson)
@@ -42,26 +43,26 @@ app.put("/operator/:id", (req, res) => {
     var edit = false
 
     operatorJson.map(item => {
-        if(item.id == ReqId) {
+        if (item.id == ReqId) {
             edit = true
             req.body.name === "" ? item.name = item.name : item.name = req.body.name
             req.body.password === "" ? item.password = item.password : item.password = req.body.password
             req.body.email === "" ? item.email = item.email : item.email = req.body.email
-        } 
+        }
     })
 
-    if(edit) {
+    if (edit) {
         res.status(200).send("The Operator Has Been Edited")
         fs.writeFileSync("./data/Operator.json", JSON.stringify(operatorJson, null, 2))
     } else {
         res.status(400).send("Id Not Found")
     }
 
-  /*   if (edit === true) {
-        res.status(200).send("Edited")
-    } else {
-        res.status(400).send("Id Not Found")
-    } */
+    /*   if (edit === true) {
+          res.status(200).send("Edited")
+      } else {
+          res.status(400).send("Id Not Found")
+      } */
 })
 app.delete("/operator/:id", (req, res) => {
     const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json", "utf-8"))
@@ -69,15 +70,15 @@ app.delete("/operator/:id", (req, res) => {
     var FilterId = false
 
     operatorJson.map(item => {
-        if(item.id === ReqId) {
+        if (item.id === ReqId) {
             FilterId = true
-            if(item.category === "superAdmin") {
+            if (item.category === "superAdmin") {
                 res.status(400).send("This Id is SuperAdmin")
             }
         }
     })
 
-    if(FilterId === true) {
+    if (FilterId === true) {
         res.status(200).send("Operator Deleted")
         const filterJson = operatorJson.filter(o => o.id !== ReqId)
         fs.writeFileSync("./data/Operator.json", JSON.stringify(filterJson, null, 2))
@@ -85,22 +86,22 @@ app.delete("/operator/:id", (req, res) => {
         res.status(400).send("Id Not Found")
     }
 })
-    
+
 /* Login */
-app.post("/login",(req, res) => {
+app.post("/login", (req, res) => {
     const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json"))
     let postToken = false
     const username = req.body.username
     const password = req.body.password
 
     const accesToken = jwt.sign(username, process.env.ACCESS_TOKEN_SECRET)
-    
+
     operatorJson.map(item => {
-        if(item.name === req.body.username && item.password === req.body.password) {
+        if (item.name === req.body.username && item.password === req.body.password) {
             postToken = true
         }
     })
-    if(postToken === true) {
+    if (postToken === true) {
         res.status(200).send(accesToken)
     } else {
         res.status(400).send("Password or Username is Error")
@@ -123,8 +124,8 @@ app.post("/history", (req, res) => {
     const name = req.body.name
     const pages = req.body.page
 
-    if(name === "" || pages === "") {
-        res.status(400).send("Name or pages is Empty") 
+    if (name === "" || pages === "") {
+        res.status(400).send("Name or pages is Empty")
     } else {
         var newHistory = {
             name: name,
@@ -164,6 +165,28 @@ app.put("/price/:id", (req, res) => {
 
 })
 
+/* room */
+app.get("/room", (req, res) => {
+    const roomJson = JSON.parse(fs.readFileSync("./data/Room.json"))
+    res.status(200).send(roomJson)
+})
+app.post("/room", (req, res) => {
+    const roomJson = JSON.parse(fs.readFileSync("./data/Room.json"))
+    const ReqBody = req.body
+
+    if (ReqBody === "" || ReqBody === "") {
+        res.status(400).send("Number or Limit Was Not Entered")
+    } else {
+        const newRoom = {
+            id: uuid.v4(),
+            number: ReqBody.number,
+            limit: ReqBody.limit,
+            persons: []
+        }
+        roomJson.push(newRoom)
+        fs.writeFileSync("./data/Room.json", JSON.stringify(roomJson, null, 2))
+    }
+})
 
 /* users */
 app.get("/users", (req, res) => {
@@ -182,6 +205,7 @@ app.post("/users", (req, res) => {
     const telNumber = req.body.telNumber
     const dedline = req.body.dedline
     const comment = req.body.comment
+    const userId = uuid.v4()
     const date = new Date()
     const month = date.getMonth() + 1
     const day = date.getDate()
@@ -196,7 +220,7 @@ app.post("/users", (req, res) => {
     } else {
         if (startDay === "") {
             var newUser = {
-                id: uuid.v4(),
+                id: userId,
                 username: username,
                 surname: surname,
                 age: age,
@@ -218,6 +242,9 @@ app.post("/users", (req, res) => {
                 skidka: 0,
                 startDay: [
                     {
+                        userId: userId,
+                        username: username,
+                        surname: surname,
                         started: "",
                         stay: "",
                         room: "",
@@ -231,7 +258,7 @@ app.post("/users", (req, res) => {
                 res.status(400).send("Stay or Room Was not Fully Entered")
             } else {
                 var newUser = {
-                    id: uuid.v4(),
+                    id: userId,
                     username: username,
                     surname: surname,
                     age: age,
@@ -255,6 +282,9 @@ app.post("/users", (req, res) => {
                     skidka: 0,
                     startDay: [
                         {
+                            userId: userId,
+                            username: username,
+                            surname: surname,
                             started: startDay,
                             stay: stay,
                             room: room,
@@ -384,8 +414,6 @@ app.get("/comment/day/:day", (req, res) => {
     console.log();
     res.status(200).send(comments)
 })
-
-
 
 
 
