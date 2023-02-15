@@ -85,7 +85,7 @@ app.delete("/operator/:id", (req, res) => {
         res.status(400).send("Id Not Found")
     }
 })
-
+    
 /* Login */
 app.post("/login",(req, res) => {
     const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json"))
