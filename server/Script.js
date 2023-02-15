@@ -187,8 +187,10 @@ app.delete('/comment/:id', (req, res) => {
 })
 app.get('/comment/month/:month', (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
-    var month = req.params.month
-    var date = new date
+
+    var month=req.params.month
+    var date= new Date
+
     var comments = []
     const year = date.getFullYear()
     for (var i = 0; i < UserData.length; i++) {
@@ -217,8 +219,8 @@ app.get('/comment/year/:year', (req, res) => {
 app.get('/comment/poster/:poster/month/:month', (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     var poster = req.params.poster
-    var month = req.params.month
-    var date = new date
+    var month=req.params.month 
+    var date = new Date
     var comments = []
     for (var i = 0; i < UserData.length; i++) {
         for (let j = 0; j < UserData[i].comment.length; j++) {
