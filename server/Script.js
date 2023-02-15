@@ -71,6 +71,9 @@ app.delete("/operator/:id", (req, res) => {
     operatorJson.map(item => {
         if(item.id === ReqId) {
             FilterId = true
+            if(item.category === "superAdmin") {
+                res.status(400).send("This Id is SuperAdmin")
+            }
         }
     })
 

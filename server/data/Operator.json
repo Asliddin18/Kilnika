@@ -5,12 +5,5 @@
     "password": "abbas11",
     "email": "abbas@",
     "category": "superAdmin"
-  },
-  {
-    "id": "40d4c2f6-190e-447c-bfb4-ca3551ddc160",
-    "name": "you",
-    "password": "you123",
-    "email": "you@123",
-    "category": "admin"
   }
 ]
