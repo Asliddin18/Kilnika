@@ -3,34 +3,108 @@ const cors = require("cors")
 const upload = require("express-fileupload")
 const fs = require("fs")
 const uuid = require("uuid")
+const jwt = require("jsonwebtoken")
+const authenticateToken = require("./Auth")
 const app = express()
+require("dotenv").config()
+
 
 app.use(cors())
 app.use(upload())
 
+/* start Operator */
 app.get("/operator", (req, res) => {
-    const operatorJson = fs.readFileSync("./data/Operator.json", "utf-8")
+    const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json", "utf-8"))
     res.status(200).send(operatorJson)
 })
-
 app.post("/operator", (req, res) => {
     const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json", "utf-8"))
     const post = req.body
 
-    if (post.name === "" || post.password === "" || post.login === "" || post.email === "") {
+    if (post.name === "" || post.password === "" || post.email === "") {
         res.status(400).send("The Information Was Not Fully Entered")
     } else {
         const newOper = {
             id: uuid.v4(),
             name: post.name,
             password: post.password,
-            login: post.login,
             email: post.email,
             category: "admin"
         }
-        res.status(201).send(newOper)
+        operatorJson.push(newOper)
+        fs.writeFileSync("./data/Operator.json", JSON.stringify(operatorJson, null, 2))
+        res.status(201).send("Operator Created")
     }
 })
+app.put("/operator/:id", (req, res) => {
+    const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json", "utf-8"))
+    const ReqId = req.params.id
+    var edit = false
+
+    operatorJson.map(item => {
+        if(item.id == ReqId) {
+            edit = true
+            req.body.name === "" ? item.name = item.name : item.name = req.body.name
+            req.body.password === "" ? item.password = item.password : item.password = req.body.password
+            req.body.email === "" ? item.email = item.email : item.email = req.body.email
+        } 
+    })
+
+    if(edit) {
+        res.status(200).send("The Operator Has Been Edited")
+        fs.writeFileSync("./data/Operator.json", JSON.stringify(operatorJson, null, 2))
+    } else {
+        res.status(400).send("Id Not Found")
+    }
+
+  /*   if (edit === true) {
+        res.status(200).send("Edited")
+    } else {
+        res.status(400).send("Id Not Found")
+    } */
+})
+app.delete("/operator/:id", (req, res) => {
+    const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json", "utf-8"))
+    const ReqId = req.params.id
+    var FilterId = false
+
+    operatorJson.map(item => {
+        if(item.id === ReqId) {
+            FilterId = true
+        }
+    })
+
+    if(FilterId === true) {
+        res.status(200).send("Operator Deleted")
+        const filterJson = operatorJson.filter(o => o.id !== ReqId)
+        fs.writeFileSync("./data/Operator.json", JSON.stringify(filterJson, null, 2))
+    } else {
+        res.status(400).send("Id Not Found")
+    }
+})
+
+/* Login */
+app.post("/login",(req, res) => {
+    const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json"))
+    let postToken = false
+    const username = req.body.username
+    const password = req.body.password
+
+    const accesToken = jwt.sign(username, process.env.ACCESS_TOKEN_SECRET)
+    
+    operatorJson.map(item => {
+        if(item.name === req.body.username && item.password === req.body.password) {
+            postToken = true
+        }
+    })
+    if(postToken === true) {
+        res.status(200).send(accesToken)
+    } else {
+        res.status(400).send("Password or Username is Error")
+    }
+})
+
+
 
 app.post("/users", (req, res) => {
     const priceData = JSON.parse(fs.readFileSync("./data/Sum.json", "utf-8"))
@@ -212,8 +286,8 @@ app.delete('/comment/:id', (req, res) => {
 app.get('/comment/month/:month', (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
 
-    var month=req.params.month
-    var date= new Date
+    var month = req.params.month
+    var date = new Date
 
     var comments = []
     const year = date.getFullYear()
@@ -243,7 +317,7 @@ app.get('/comment/year/:year', (req, res) => {
 app.get('/comment/poster/:poster/month/:month', (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     var poster = req.params.poster
-    var month=req.params.month 
+    var month = req.params.month
     var date = new Date
     var comments = []
     for (var i = 0; i < UserData.length; i++) {

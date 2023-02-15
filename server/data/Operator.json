@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "5a9f4b0a-deae-4bdf-8964-232551f2557b",
+    "name": "abbas",
+    "password": "abbas11",
+    "email": "abbas@",
+    "category": "superAdmin"
+  },
+  {
+    "id": "40d4c2f6-190e-447c-bfb4-ca3551ddc160",
+    "name": "you",
+    "password": "you123",
+    "email": "you@123",
+    "category": "admin"
+  }
+]
