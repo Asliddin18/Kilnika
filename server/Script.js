@@ -13,6 +13,7 @@ app.post("/users", (req, res) => {
  const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
  const username = req.body.username
  const surname = req.body.surname
+ const creator=req.body.creator
  const age = req.body.age
  const passportSer = req.body.passwordSer
  const passportNum = req.body.passportNum
@@ -67,6 +68,7 @@ app.post("/users", (req, res) => {
      username: username,
      surname: surname,
      age: age,
+     creator:creator,
      passportSer: passportSer,
      passportNum: passportNum,
      telNumber: telNumber,
@@ -77,6 +79,7 @@ app.post("/users", (req, res) => {
        month: month,
        year: year,
        hour: hour,
+       poster:req.body.poster,
        message: comment
       }
      ] : [],
@@ -144,6 +147,7 @@ app.post("/comment/:id", (req, res) => {
  var data = {
   id: uuid.v4(),
   day: day,
+  poster:req.body.poster,
   month: month,
   year: year,
   hour: hour,
@@ -170,7 +174,66 @@ app.delete('/comment/:id',(req,res)=>{
     }
 
 })
-
+app.get('/comment/month/:month',(req,res)=>{
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    var month=req.params.month
+    var date= new date
+    var comments = []
+    const year = date.getFullYear()
+    for (var i = 0; i < UserData.length; i++) {
+        for (let j = 0; j < UserData[i].comment.length; j++) {
+            if (UserData[i].comment[j].year == year && UserData[i].comment[j].month==month){   
+            comments.push(UserData[i].comment[j])}
+        }
+    }
+res.status(200).send(comments)
+})
+app.get('/comment/year/:year', (req, res) => {
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    var year = req.params.year
+    var date = new date
+    var comments = []
+    for (var i = 0; i < UserData.length; i++) {
+        for (let j = 0; j < UserData[i].comment.length; j++) {
+            if (UserData[i].comment[j].year == year) {
+                comments.push(UserData[i].comment[j])
+            }
+        }
+    }
+    res.status(200).send(comments)
+})
+app.get('/comment/poster/:poster/month/:month', (req, res) => {
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    var poster = req.params.poster
+    var month=req.params.month 
+    var date = new date
+    var comments = []
+    for (var i = 0; i < UserData.length; i++) {
+        for (let j = 0; j < UserData[i].comment.length; j++) {
+            if (UserData[i].comment[j].poster == poster && UserData[i].comment[j].month == month) {
+                comments.push(UserData[i].comment[j])
+            }
+        }
+    }
+    res.status(200).send(comments)
+})
+app.get("/comment/day/:day",(req,res)=>{
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    var day = req.params.day
+    var date = new Date
+    const month = date.getMonth() + 1
+    var comments = []
+    const year = date.getFullYear()
+    for (var i = 0; i < UserData.length; i++) {
+        for (let j = 0; j < UserData[i].comment.length; j++) {
+            if (UserData[i].comment[j].year == year && UserData[i].comment[j].month == month && UserData[i].comment[j].day == day) {    
+                comments.push(UserData[i].comment[j])
+            }
+        }
+    }
+    console.log();
+    res.status(200).send(comments)
+})
 app.listen(8080, () => {
  console.log("The Server is Running");
 })
