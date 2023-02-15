@@ -8,6 +8,30 @@ const app = express()
 app.use(cors())
 app.use(upload())
 
+app.get("/operator", (req, res) => {
+    const operatorJson = fs.readFileSync("./data/Operator.json", "utf-8")
+    res.status(200).send(operatorJson)
+})
+
+app.post("/operator", (req, res) => {
+    const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json", "utf-8"))
+    const post = req.body
+
+    if (post.name === "" || post.password === "" || post.login === "" || post.email === "") {
+        res.status(400).send("The Information Was Not Fully Entered")
+    } else {
+        const newOper = {
+            id: uuid.v4(),
+            name: post.name,
+            password: post.password,
+            login: post.login,
+            email: post.email,
+            category: "admin"
+        }
+        res.status(201).send(newOper)
+    }
+})
+
 app.post("/users", (req, res) => {
     const priceData = JSON.parse(fs.readFileSync("./data/Sum.json", "utf-8"))
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
@@ -103,7 +127,7 @@ app.post("/users", (req, res) => {
                 }
             }
         }
-        if(newUser !== undefined) {
+        if (newUser !== undefined) {
             res.status(201).send(newUser)
             UserData.push(newUser)
             fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
@@ -248,6 +272,16 @@ app.get("/comment/day/:day", (req, res) => {
     console.log();
     res.status(200).send(comments)
 })
+
+
+
+
+
+
+
+
+
+
 app.listen(8080, () => {
     console.log("The Server is Running");
 })
