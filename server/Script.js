@@ -416,8 +416,8 @@ app.get("/comment/day/:day", (req, res) => {
     res.status(200).send(comments)
 })
 
-app.get("/room/set?data",(req,res)=>{
-    var day=req.query.body
+app.get("/room/set/",(req,res)=>{
+    var day=req.params
     var date= new Date
     var bron=[]
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
@@ -429,7 +429,7 @@ for (let i = 0; i < UserData.length; i++) {
         }
     }
 }
-res.status(200).send(req.query.day)
+res.status(200).send(bron)
 })
 
 
