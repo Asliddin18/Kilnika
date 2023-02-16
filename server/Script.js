@@ -481,17 +481,21 @@ app.post("/comment/:id", (req, res) => {
     res.status(200).send("yuborildi")
 })
 app.delete('/comment/:id', (req, res) => {
-    var id = red.params.id
+    var id = req.params.id
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     for (var i = 0; i < UserData.length; i++) {
         for (let j = 0; j < UserData[i].comment.length; j++) {
             if (UserData[i].comment[j].id == id) {
                 UserData[i].comment.splice(j, 1)
-                fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
+
+      res.status(201).send("User Has Been Created")
+        fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
+
             }
         }
+  
+    
     }
-    res.status(200).send("yuborildi") 
 })
 app.get('/comment/month/:month', (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
@@ -558,7 +562,7 @@ app.get("/comment/day/:day", (req, res) => {
 })
 
 app.get("/room/set/:date", (req, res) => {
-    var day = req.params.date
+    var day = req.params.date   
     var bron = []
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     const roomJson = JSON.parse(fs.readFileSync("./data/Room.json"))

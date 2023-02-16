@@ -6,16 +6,7 @@
     "age": "35",
     "passportNum": "020202",
     "telNumber": "+99891234567",
-    "comment": [
-      {
-        "id": "0ec52728-43ab-4f8f-ba2c-bf0da3eb01c2",
-        "day": 16,
-        "month": 2,
-        "year": 2023,
-        "hour": "14:27",
-        "message": "Hello Eshmat"
-      }
-    ],
+    "comment": [],
     "dedline": "9-02-02",
     "analiz": [
       {
@@ -46,16 +37,7 @@
     "age": "15",
     "passportNum": "303003",
     "telNumber": "+123456789",
-    "comment": [
-      {
-        "id": "593d6acf-9d88-4a85-9a38-18bf35a9d3b7",
-        "day": 16,
-        "month": 2,
-        "year": 2023,
-        "hour": "14:32",
-        "message": "Hello salom"
-      }
-    ],
+    "comment": [],
     "dedline": "2345678912",
     "analiz": [
       {
