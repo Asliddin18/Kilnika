@@ -1,77 +1,67 @@
 [
   {
-    "id": "52638564-5cbe-4533-b421-0ac867beda1f",
-    "username": "odill",
-    "surname": "alutdinov",
-    "age": "15",
-    "passportSer": "Itn",
-    "passportNum": "12342134",
-    "telNumber": "+998935836269",
+    "id": "446fb00c-d49c-4d7d-81ac-8a3d0440d4f9",
+    "username": "eshmat",
+    "surname": "toshmatov",
+    "age": "35",
+    "passportNum": "020202",
+    "telNumber": "+99891234567",
     "comment": [
       {
-        "day": 15,
+        "id": "0ec52728-43ab-4f8f-ba2c-bf0da3eb01c2",
+        "day": 16,
         "month": 2,
         "year": 2023,
-        "hour": "20:10",
-        "message": "odil basssssss"
+        "hour": "14:27",
+        "message": "Hello Eshmat"
       }
     ],
-    "dedline": "15.02.2023",
+    "dedline": "9-02-02",
     "analiz": [],
     "skidka": 0,
     "startDay": [
       {
-        "userId": "52638564-5cbe-4533-b421-0ac867beda1f",
-        "username": "odill",
-        "surname": "alutdinov",
-        "started": "15/02/2023",
-        "stay": 10,
+        "userId": "446fb00c-d49c-4d7d-81ac-8a3d0440d4f9",
+        "username": "eshmat",
+        "surname": "toshmatov",
+        "started": "16 ",
+        "stay": "10",
         "room": "204",
-        "daily":345000,
-        "money":3450000
+        "daily": "400",
+        "money": "1000"
       }
     ]
   },
-   {
-    "id": "52638564-5cbe-4533-b421-0ac867beda1f",
-    "username": "odill",
-    "surname": "alutdinov",
+  {
+    "id": "28f7b60b-8f2c-4e86-ad9b-611a08aecd6f",
+    "username": "salom",
+    "surname": "ok",
     "age": "15",
-    "passportSer": "Itn",
-    "passportNum": "12342134",
-    "telNumber": "+998935836269",
+    "passportNum": "303003",
+    "telNumber": "+123456789",
     "comment": [
       {
-        "day": 15,
+        "id": "593d6acf-9d88-4a85-9a38-18bf35a9d3b7",
+        "day": 16,
         "month": 2,
         "year": 2023,
-        "hour": "20:10",
-        "message": "odil basssssss"
+        "hour": "14:32",
+        "message": "Hello salom"
       }
     ],
-    "dedline": "15.02.2023",
+    "dedline": "2345678912",
     "analiz": [],
     "skidka": 0,
     "startDay": [
       {
-        "userId": "52638564-5cbe-4533-b421-0ac867beda1f",
-        "username": "odill",
-        "surname": "alutdinov",
-        "started": "19/02/2023",
-        "stay": 10,
-        "room": "203",
-        "daily":345000,
-        "money":3450000
-      },
-          {
-        "userId": "52638564-5cbe-4533-b421-0ac867beda1f",
-        "username": "odill",
-        "surname": "alutdinov",
-        "started": "15/12/2023",
-        "stay": 10,
-        "room": "203",
-        "daily":345000,
-        "money":3450000
+        "userId": "28f7b60b-8f2c-4e86-ad9b-611a08aecd6f",
+        "username": "salom",
+        "surname": "ok",
+        "started": "123123",
+        "stay": "123",
+        "room": "205",
+        "daily": "400",
+        "money": "200"
       }
     ]
   }
