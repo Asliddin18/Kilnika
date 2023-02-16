@@ -8,14 +8,7 @@
     "telNumber": "+99891234567",
     "comment": [],
     "dedline": "9-02-02",
-    "analiz": [
-      {
-        "id": "9cd92f76-016f-42f2-8d4d-6b68fe599dc6",
-        "analizName": "qon",
-        "analizFile": "1676550437311license.txt"
-      },
-      []
-    ],
+    "analiz": [],
     "skidka": 0,
     "startDay": [
       {
@@ -39,18 +32,7 @@
     "telNumber": "+123456789",
     "comment": [],
     "dedline": "2345678912",
-    "analiz": [
-      {
-        "id": "b2dec0f9-16a1-4293-8958-d6e2f07c39ac",
-        "analizName": "salom",
-        "analizFile": "1676550410807license.txt"
-      },
-      {
-        "id": "c2045b80-60d1-44ce-92d1-132e39023fc1",
-        "analizName": "helllo",
-        "analizFile": "1676550424155license.txt"
-      }
-    ],
+    "analiz": [],
     "skidka": 0,
     "startDay": [
       {
