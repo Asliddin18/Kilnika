@@ -492,16 +492,15 @@ app.get("/comment/day/:day", (req, res) => {
 
 app.get("/room/set/:date", (req, res) => {
     var day = req.params.date
-    var date = new Date
     var bron = []
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     const roomJson = JSON.parse(fs.readFileSync("./data/Room.json"))
     for (let i = 0; i < UserData.length; i++) {
         for (let j = 0; j < UserData[i].startDay.length; j++) {
-            if (date.getDate(UserData[i].startDay[j].started) <= date.getDate(day) && date.getDate(day) < date.getDate(UserData[i].startDay[j].started) + UserData[i].startDay[j].stay) {
+            if (new Date(UserData[i].startDay[j].started).getTime() <= new Date(day) && new Date(day) < new Date(UserData[i].startDay[j].started) + UserData[i].startDay[j].stay) {
                 bron.push(UserData[i].startDay[j])
             }
-            console.log(UserData[i].startDay[j].started)
+            console.log(new Date('01/01/2023').getTime())
         }
     }
     res.status(200).send(bron)
