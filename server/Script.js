@@ -174,7 +174,7 @@ app.post("/room", (req, res) => {
     const roomJson = JSON.parse(fs.readFileSync("./data/Room.json"))
     const ReqBody = req.body
 
-    if (ReqBody === "" || ReqBody === "") {
+    if (ReqBody.number === "" || ReqBody.limit === "") {
         res.status(400).send("Number or Limit Was Not Entered")
     } else {
         const newRoom = {
@@ -184,6 +184,7 @@ app.post("/room", (req, res) => {
             persons: []
         }
         roomJson.push(newRoom)
+        res.status(200).send("yuborildi")
         fs.writeFileSync("./data/Room.json", JSON.stringify(roomJson, null, 2))
     }
 })
@@ -415,6 +416,21 @@ app.get("/comment/day/:day", (req, res) => {
     res.status(200).send(comments)
 })
 
+app.get("/room/set?data",(req,res)=>{
+    var day=req.query.body
+    var date= new Date
+    var bron=[]
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    const roomJson = JSON.parse(fs.readFileSync("./data/Room.json"))
+for (let i = 0; i < UserData.length; i++) {
+    for (let j = 0; j < startDay.length; j++) {
+        if (date.getDate(UserData[i].startDay[j].started) <= date.getDate(day) && date.getDate(day) < date.getDate(UserData[i].startDay[j].started) + UserData[i].startDay[j].stay){
+            bron.push(UserData[i].startDay[j])
+        }
+    }
+}
+res.status(200).send(req.query.day)
+})
 
 
 
