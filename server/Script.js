@@ -572,18 +572,21 @@ app.get("/comment/day/:day", (req, res) => {
 })
 
 app.get("/room/set/:date", (req, res) => {
-    var day = req.params.date   
-    var bron = []
+    var day = req.params.date;   
+    var bron=[];
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
-    const roomJson = JSON.parse(fs.readFileSync("./data/Room.json"))
-    for (let i = 0; i < UserData.length; i++) {
-        for (let j = 0; j < UserData[i].startDay.length; j++) {
-            if (new Date(UserData[i].startDay[j].started).getTime() <= new Date(day) && new Date(day) < new Date(UserData[i].startDay[j].started) + UserData[i].startDay[j].stay) {
-                bron.push(UserData[i].startDay[j])
-            }
-            console.log(new Date('01/01/2023').getTime())
+    // const roomJson = JSON.parse(fs.readFileSync("./data/Room.json", "utf-8"))
+    UserData.map((item,key)=>{
+        for (let j = 0; j < item.startDay.length; j++) {
+            if (new Date(12-02-2023 <= new Date(day).getTime() && new Date(day).getTime()< 12-12-2023){
+                bron.unshift(item.startDay[j])
+                }
+            console.log((item.startDay[j].started),1);
+                console.log(new Date(day),2);
+                console.log(new Date(item.startDay[j].started) + new Date(item.startDay[j].stay),3);
         }
-    }
+
+    })
     res.status(200).send(bron)
 })
 
