@@ -360,20 +360,56 @@ app.delete("/users/:id", (req, res) => {
         res.status(200).send("The User is Deleted")
     }
 })
-app.put("/users/:id", (req, res) => {
+/* app.put("/users/:id", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     const ReqId = req.params.id
+    const ReqBody = req.body
     let filterId = false
     
     for (let i = 0; i < UserData.length; i++) {
         if(UserData[i].id === ReqId) {
             filterId = true
+            
         }
     }
     if(filterId == false) {
         res.status(400).send("Id Not Found")
     } else {
         res.status(200).send("User Edited")
+    }
+})
+ */
+
+/* analiz */
+app.post("/users/analiz/:id", (req, res) => {
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    const ReqId = req.params.id
+    const analizName = req.body.analizName
+    const analizFile = req.files.analizFile
+    let postAnaliz = false
+    
+    for (let i = 0; i < UserData.length; i++) {
+        if(UserData[i].id === ReqId) {
+            postAnaliz = true
+        }
+    }
+    if(postAnaliz === false) {
+        res.status(400).send("Id Not Found")
+    } else {
+        if(analizFile === "" || analizName === "") {
+            res.status(400).send("AnalizFile or AnalizName Not Entered")
+        } else {
+            var newObj = {
+                id: uuid.v4(),
+                analizName: analizName,
+                analizFile: analizFile
+            }
+            UserData.map(item => {
+                item.analiz.push(newObj)
+                UserData
+            })
+            res.status(201).send("Analiz Created")
+        }
     }
 })
 
