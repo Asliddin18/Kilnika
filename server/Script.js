@@ -360,6 +360,22 @@ app.delete("/users/:id", (req, res) => {
         res.status(200).send("The User is Deleted")
     }
 })
+app.put("/users/:id", (req, res) => {
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    const ReqId = req.params.id
+    let filterId = false
+    
+    for (let i = 0; i < UserData.length; i++) {
+        if(UserData[i].id === ReqId) {
+            filterId = true
+        }
+    }
+    if(filterId == false) {
+        res.status(400).send("Id Not Found")
+    } else {
+        res.status(200).send("User Edited")
+    }
+})
 
 /* comment */
 app.get("/comment", (req, res) => {
@@ -496,8 +512,6 @@ app.get("/room/set/:date", (req, res) => {
 
 
 
-
 app.listen(8080, () => {
     console.log("The Server is Running");
 })
-
