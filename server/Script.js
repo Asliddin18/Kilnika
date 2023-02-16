@@ -578,7 +578,7 @@ app.get("/room/set/:date", (req, res) => {
     // const roomJson = JSON.parse(fs.readFileSync("./data/Room.json", "utf-8"))
     UserData.map((item,key)=>{
         for (let j = 0; j < item.startDay.length; j++) {
-            if (new Date(12-02-2023 <= new Date(day).getTime() && new Date(day).getTime()< 12-12-2023){
+            if (new Date("12-02-2023")<= new Date(day).getTime() && new Date(day).getTime() < "12-12-2023"){
                 bron.unshift(item.startDay[j])
                 }
             console.log((item.startDay[j].started),1);
