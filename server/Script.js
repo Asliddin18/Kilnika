@@ -385,14 +385,16 @@ app.post("/users/analiz/:id", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     const ReqId = req.params.id
     const analizName = req.body.analizName
-    const analizFile = req.files.analizFile
+    const analizFile = Date.now() + req.files.analizFile.name
     let postAnaliz = false
     
     for (let i = 0; i < UserData.length; i++) {
         if(UserData[i].id === ReqId) {
             postAnaliz = true
+
         }
     }
+
     if(postAnaliz === false) {
         res.status(400).send("Id Not Found")
     } else {
@@ -404,12 +406,39 @@ app.post("/users/analiz/:id", (req, res) => {
                 analizName: analizName,
                 analizFile: analizFile
             }
+            req.files.analizFile.mv(`${__dirname}/public/${analizFile}`)
+            
             UserData.map(item => {
-                item.analiz.push(newObj)
-                UserData
+                if(item.id === ReqId) {
+                    item.analiz.push(newObj)
+                    fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
+                }
             })
             res.status(201).send("Analiz Created")
         }
+    }
+})
+app.delete("/users/analiz/:id", (req, res) => {
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    const ReqId = req.params.id
+    let deleteAnaliz = false
+    
+    for (let i = 0; i < UserData.length; i++) {
+        UserData[i].analiz.map(item => {
+            if(item.id === ReqId) {
+                deleteAnaliz = true
+                const filterJson = UserData[i].analiz.filter(c => c.id !== item.id)
+                UserData[i].analiz.push(filterJson)
+                fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
+            }
+        })
+        
+    }
+
+    if(deleteAnaliz === true) {
+        res.status(200).send("The Analiz is Deleted")
+    } else {
+        res.status(400).send("Id Not Found")
     }
 })
 
@@ -458,9 +487,11 @@ app.delete('/comment/:id', (req, res) => {
         for (let j = 0; j < UserData[i].comment.length; j++) {
             if (UserData[i].comment[j].id == id) {
                 UserData[i].comment.splice(j, 1)
+                fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
             }
         }
     }
+    res.status(200).send("yuborildi") 
 })
 app.get('/comment/month/:month', (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
