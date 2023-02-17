@@ -9,10 +9,11 @@ function authenticateToken(req, res, next) {
  }
  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
   if(err) {
-   res.status(403).send("Token Error")
+   res.status(403).send("Error in Token")
+  } else {
+   req.user = user
+   next()
   }
-  req.user = user
-  next()
  })
 } 
 

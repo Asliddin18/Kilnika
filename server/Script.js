@@ -15,7 +15,7 @@ app.use(upload())
 
 /* start Operator */
 
-app.get("/operator", (req, res) => {
+app.get("/operator", authenticateToken, (req, res) => {
     const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json", "utf-8"))
     res.status(200).send(operatorJson)
 })
