@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 const authenticateToken = require("./Auth")
 const app = express()
 require("dotenv").config()
-
+// const Math =require('Math')
 
 app.use(cors())
 app.use(upload())
@@ -572,14 +572,18 @@ app.get("/comment/day/:day", (req, res) => {
 })
 
 app.get("/room/set/:date", (req, res) => {
-    var day = req.params.date;   
+    var day = req.params.date; 
+
+    var oneDay = 1000 * 60 * 60 * 24;
+   var now=new Date()
+var Math=new Math
     var bron=[];
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     // const roomJson = JSON.parse(fs.readFileSync("./data/Room.json", "utf-8"))
     UserData.map((item,key)=>{
         for (let j = 0; j < item.startDay.length; j++) {
-            if (new Date("12-02-2023")<= new Date(day).getTime() && new Date(day).getTime() < "12-12-2023"){
-                bron.unshift(item.startDay[j])
+            if ( Math.floor((new Date(item.startDay[j].started) - new Date(now.getFullYear()-1, 0, 0) )/ oneDay)<= Math.floor((new Date(day) - new Date(now.getFullYear()-1, 0, 0) )/ oneDay) && new Math.floor((new Date(day) - new Date(now.getFullYear()-1, 0, 0) )/ oneDay) < Math.floor((new Date(item.startDay[j]) - new Date(now.getFullYear()-1, 0, 0) )/ oneDay)+item.startDay[j].stay){
+                bron.unshift(item.startDay[j].started)
                 }
             console.log((item.startDay[j].started),1);
                 console.log(new Date(day),2);
