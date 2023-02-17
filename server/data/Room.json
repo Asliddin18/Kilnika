@@ -9,18 +9,7 @@
     "id": "e7e00bc6-fa75-436d-b432-0b8cad171605",
     "number": 205,
     "limit": "4",
-    "persons": [
-      {
-        "userId": "28f7b60b-8f2c-4e86-ad9b-611a08aecd6f",
-        "username": "salom",
-        "surname": "ok",
-        "started": "02-18-2023",
-        "stay": 123,
-        "room": "205",
-        "daily": "400",
-        "money": "200"
-      }
-    ]
+    "persons": []
   },
   {
     "id": "d27a1227-f751-451f-b213-b5d8a07605b4",

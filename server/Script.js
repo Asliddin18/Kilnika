@@ -597,7 +597,7 @@ app.get("/room/set/:date", (req, res) => {
                 roomJson[i].persons.push(a[j])
             }
         }
-        fs.writeFileSync("./data/Room.json", JSON.stringify(roomJson, null, 2))
+        // fs.writeFileSync("./data/Room.json", JSON.stringify(roomJson, null, 2))
     }
 
 
