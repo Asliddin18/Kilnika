@@ -7,11 +7,21 @@ const uuid = require("uuid")
 const jwt = require("jsonwebtoken")
 const authenticateToken = require("./Auth")
 const app = express()
+import LogRocket from 'logrocket';
+LogRocket.init('vuf2yl/siuuu');
 require("dotenv").config()
 // const Math =require('Math')
 
 app.use(cors())
 app.use(upload())
+
+LogRocket.identify('THE_USER_ID_IN_YOUR_APP', {
+    name: 'James Morrison',
+    email: 'jamesmorrison@example.com',
+  
+    // Add your own custom user variables here, ie:
+    subscriptionType: 'pro'
+  });
 
 /* start Operator */
 
