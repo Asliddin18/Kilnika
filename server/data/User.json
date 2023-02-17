@@ -15,11 +15,41 @@
         "userId": "446fb00c-d49c-4d7d-81ac-8a3d0440d4f9",
         "username": "eshmat",
         "surname": "toshmatov",
-        "started": "02-24-2023",
-        "stay": "10",
-        "room": "204",
+        "started": "02-18-2023",
+        "stay": 10,
+        "room": "205",
         "daily": "400",
-        "money": "1000"
+        "money": "200000"
+      },
+      {
+        "userId": "446fb00c-d49c-4d7d-81ac-8a3d0440d4f9",
+        "username": "eshmat",
+        "surname": "toshmatov",
+        "started": "02-18-2023",
+        "stay": 10,
+        "room": "205",
+        "daily": "400",
+        "money": "200000"
+      },
+      {
+        "userId": "446fb00c-d49c-4d7d-81ac-8a3d0440d4f9",
+        "username": "eshmat",
+        "surname": "toshmatov",
+        "started": "02-18-2023",
+        "stay": 10,
+        "room": "205",
+        "daily": "400",
+        "money": "200000"
+      },
+      {
+        "userId": "446fb00c-d49c-4d7d-81ac-8a3d0440d4f9",
+        "username": "eshmat",
+        "surname": "toshmatov",
+        "started": "02-18-2023",
+        "stay": 10,
+        "room": "205",
+        "daily": "400",
+        "money": "200000"
       }
     ]
   },
@@ -39,11 +69,21 @@
         "userId": "28f7b60b-8f2c-4e86-ad9b-611a08aecd6f",
         "username": "salom",
         "surname": "ok",
-        "started": "18-02-2023",
-        "stay": "123",
+        "started": "02-18-2023",
+        "stay": 123,
         "room": "205",
         "daily": "400",
         "money": "200"
+      },
+      {
+        "userId": "28f7b60b-8f2c-4e86-ad9b-611a08aecd6f",
+        "username": "salom",
+        "surname": "ok",
+        "started": "02-29-2023",
+        "stay": 10,
+        "room": "205",
+        "daily": "400",
+        "money": "200000"
       }
     ]
   }

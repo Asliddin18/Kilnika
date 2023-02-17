@@ -1,11 +1,5 @@
 [
   {
-    "id": "9d277a95-527a-4ef2-963f-8ac260a19ef7",
-    "number": "124",
-    "limit": "4",
-    "persons": []
-  },
-  {
     "id": "2bee59b6-2f3e-433d-ba87-bbc8f0275a75",
     "number": "203",
     "limit": "2",
@@ -13,13 +7,24 @@
   },
   {
     "id": "e7e00bc6-fa75-436d-b432-0b8cad171605",
-    "number": "103",
+    "number": 205,
     "limit": "4",
-    "persons": []
+    "persons": [
+      {
+        "userId": "28f7b60b-8f2c-4e86-ad9b-611a08aecd6f",
+        "username": "salom",
+        "surname": "ok",
+        "started": "02-18-2023",
+        "stay": 123,
+        "room": "205",
+        "daily": "400",
+        "money": "200"
+      }
+    ]
   },
   {
     "id": "d27a1227-f751-451f-b213-b5d8a07605b4",
-    "number": "204",
+    "number": 204,
     "limit": "2",
     "persons": []
   }

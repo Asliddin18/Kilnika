@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const upload = require("express-fileupload")
 const fs = require("fs")
+const math = require("mathjs")
 const uuid = require("uuid")
 const jwt = require("jsonwebtoken")
 const authenticateToken = require("./Auth")
@@ -193,14 +194,14 @@ app.delete("/room/:id", (req, res) => {
     let checked = false
 
     for (let i = 0; i < roomJson.length; i++) {
-        if(roomJson[i].id === ReqId) {
+        if (roomJson[i].id === ReqId) {
             checked = true
             var filterJson = roomJson.filter(a => a.id !== roomJson[i].id)
             fs.writeFileSync("./data/Room.json", JSON.stringify(filterJson, null, 2))
         }
     }
 
-    if(checked == false) {
+    if (checked == false) {
         res.status(400).send("Id Not Found")
     } else {
         res.status(200).send("The Room is Deleted")
@@ -213,19 +214,19 @@ app.put("/room/:id", (req, res) => {
     let checked = false
 
     for (let i = 0; i < roomJson.length; i++) {
-        if(roomJson[i].id === ReqId) {
+        if (roomJson[i].id === ReqId) {
             checked = true
             reqBody === "" ? roomJson[i].number = roomJson[i].number : roomJson[i].number = reqBody.number
             reqBody === "" ? roomJson[i].limit = roomJson[i].limit : roomJson[i].limit = reqBody.limit
             fs.writeFileSync("./data/Room.json", JSON.stringify(roomJson, null, 2))
         }
     }
-    if(checked == false) {
+    if (checked == false) {
         res.status(400).send("Id Not Found")
     } else {
         res.status(200).send("Room Edited")
     }
-    
+
 })
 
 /* users */
@@ -346,15 +347,15 @@ app.delete("/users/:id", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     const ReqId = req.params.id
     let deleteCheck = false
-    
+
     for (let i = 0; i < UserData.length; i++) {
-        if(UserData[i].id === ReqId) {
+        if (UserData[i].id === ReqId) {
             const filterJson = UserData.filter(c => c.id !== UserData[i].id)
             fs.writeFileSync("./data/User.json", JSON.stringify(filterJson, null, 2))
             deleteCheck = true
         }
     }
-    if(deleteCheck == false) {
+    if (deleteCheck == false) {
         res.status(400).send("Id Not Found")
     } else {
         res.status(200).send("The User is Deleted")
@@ -387,18 +388,18 @@ app.post("/users/analiz/:id", (req, res) => {
     const analizName = req.body.analizName
     const analizFile = Date.now() + req.files.analizFile.name
     let postAnaliz = false
-    
+
     for (let i = 0; i < UserData.length; i++) {
-        if(UserData[i].id === ReqId) {
+        if (UserData[i].id === ReqId) {
             postAnaliz = true
 
         }
     }
 
-    if(postAnaliz === false) {
+    if (postAnaliz === false) {
         res.status(400).send("Id Not Found")
     } else {
-        if(analizFile === "" || analizName === "") {
+        if (analizFile === "" || analizName === "") {
             res.status(400).send("AnalizFile or AnalizName Not Entered")
         } else {
             var newObj = {
@@ -407,9 +408,9 @@ app.post("/users/analiz/:id", (req, res) => {
                 analizFile: analizFile
             }
             req.files.analizFile.mv(`${__dirname}/public/${analizFile}`)
-            
+
             UserData.map(item => {
-                if(item.id === ReqId) {
+                if (item.id === ReqId) {
                     item.analiz.push(newObj)
                     fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
                 }
@@ -422,7 +423,7 @@ app.delete("/users/analiz/:id", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     const ReqId = req.params.id
     // let deleteAnaliz = false
-    
+
     // for (let i = 0; i < UserData.length; i++) {
     //     UserData[i].analiz.map(item => {
     //         if(item.id === ReqId) {
@@ -432,9 +433,9 @@ app.delete("/users/analiz/:id", (req, res) => {
     //             fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
     //         }
     //     })
-        
+
     // }
-    
+
     for (var i = 0; i < UserData.length; i++) {
         for (let j = 0; j < UserData[i].analiz.length; j++) {
             if (UserData[i].analiz[j].id == ReqId) {
@@ -443,7 +444,8 @@ app.delete("/users/analiz/:id", (req, res) => {
                 res.status(200).send("User Has Been Created")
                 fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
             }
-        }}
+        }
+    }
 
     // if(deleteAnaliz === true) {
     //     res.status(200).send("The Analiz is Deleted")
@@ -498,13 +500,13 @@ app.delete('/comment/:id', (req, res) => {
             if (UserData[i].comment[j].id == id) {
                 UserData[i].comment.splice(j, 1)
 
-      res.status(201).send("User Has Been Created")
-        fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
+                res.status(201).send("User Has Been Created")
+                fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
 
             }
         }
-  
-    
+
+
     }
 })
 app.get('/comment/month/:month', (req, res) => {
@@ -572,31 +574,89 @@ app.get("/comment/day/:day", (req, res) => {
 })
 
 app.get("/room/set/:date", (req, res) => {
-    var day = req.params.date; 
-
+    var day = req.params.date;
     var oneDay = 1000 * 60 * 60 * 24;
-   var now=new Date()
-var Math=new Math
-    var bron=[];
+    var now = new Date()
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
-    // const roomJson = JSON.parse(fs.readFileSync("./data/Room.json", "utf-8"))
-    UserData.map((item,key)=>{
-        for (let j = 0; j < item.startDay.length; j++) {
-            if ( Math.floor((new Date(item.startDay[j].started) - new Date(now.getFullYear()-1, 0, 0) )/ oneDay)<= Math.floor((new Date(day) - new Date(now.getFullYear()-1, 0, 0) )/ oneDay) && new Math.floor((new Date(day) - new Date(now.getFullYear()-1, 0, 0) )/ oneDay) < Math.floor((new Date(item.startDay[j]) - new Date(now.getFullYear()-1, 0, 0) )/ oneDay)+item.startDay[j].stay){
-                bron.unshift(item.startDay[j].started)
-                }
-            console.log((item.startDay[j].started),1);
-                console.log(new Date(day),2);
-                console.log(new Date(item.startDay[j].started) + new Date(item.startDay[j].stay),3);
-        }
+    const roomJson = JSON.parse(fs.readFileSync("./data/Room.json"))
 
-    })
-    res.status(200).send(bron)
+    var a = []
+    for (let i = 0; i < UserData.length; i++) {
+        for (let j = 0; j < UserData[i].startDay.length; j++) {
+            var starting = math.floor((new Date(UserData[i].startDay[j].started) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
+            var myday = math.floor((new Date(day) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
+            var finishing = starting + UserData[i].startDay[j].stay
+            if (starting <= myday && myday < finishing) {
+                a.push(UserData[i].startDay[j])
+            }
+        }
+    }
+    for (let i = 0; i < roomJson.length; i++) {
+        for (let j = 0; j < a.length; j++) {
+            if (a[j].room == roomJson[i].number) {
+                roomJson[i].persons.push(a[j])
+            }
+        }
+        fs.writeFileSync("./data/Room.json", JSON.stringify(roomJson, null, 2))
+    }
+
+
+    res.status(200).send(roomJson)
 })
 
+app.post("/room/set/:userId", (req, res) => {
+    var day = req.body.date;
+    var room = req.body.room;
+    var userId = req.params.userId
+    var oneDay = 1000 * 60 * 60 * 24;
+    const price = JSON.parse(fs.readFileSync("./data/Sum.json", "utf-8"))
+    var now = new Date()
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    const roomJson = JSON.parse(fs.readFileSync("./data/Room.json"))
+    for (let i = 0; i < roomJson.length; i++) {
+        if (roomJson[i].number == room) {
+            var limit = roomJson[i].limit
+        }
+    }
+    var count = 0
+    for (let i = 0; i < UserData.length; i++) {
+        for (let j = 0; j < UserData[i].startDay.length; j++) {
+            var starting = math.floor((new Date(UserData[i].startDay[j].started) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
+            var myday = math.floor((new Date(day) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
+            var finishing = starting + UserData[i].startDay[j].stay
+            if (starting-req.body.stay<= myday && myday < finishing && room == UserData[i].startDay[j].room) {
+                count++
+            }
+        }
+    }
+    if (count<=limit) {
+        console.log(count);
+        console.log(limit);
+        for (let j = 0; j < UserData.length; j++) {
+            if (UserData[j].id == userId) {
+                var post = {
+                    "userId": UserData[j].id,
+                    "username": UserData[j].username,
+                    "surname": UserData[j].surname,
+                    "started": day,
+                    "stay": req.body.stay * 1,
+                    "room": room,
+                    "daily": price[0].price,
+                    "money": req.body.money
+                }
+                UserData[j].startDay.push(post)
+                fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
+                res.status(200).send("malumot joylandi")
+            }
+        }
+       
+
+    } else {
+        res.status(500).send("Siz kiritgan hona ayni vaqtda band")
+    }
 
 
-
+})
 
 
 app.listen(8080, () => {
