@@ -142,6 +142,8 @@ app.post("/history", (req, res) => {
 
 })
 
+
+
 /* price */
 app.get("/price", (req, res) => {
     const price = JSON.parse(fs.readFileSync("./data/Sum.json", "utf-8"))
