@@ -249,6 +249,7 @@ app.post("/users", (req, res) => {
     const telNumber = req.body.telNumber
     const dedline = req.body.dedline
     const comment = req.body.comment
+    const address = req.body.address
     const userId = uuid.v4()
     const date = new Date()
     const month = date.getMonth() + 1
@@ -272,6 +273,7 @@ app.post("/users", (req, res) => {
                 passportSer: passportSer,
                 passportNum: passportNum,
                 telNumber: telNumber,
+                address: address,
                 comment: comment !== "" ? [
                     {
                         day: day,
@@ -311,6 +313,7 @@ app.post("/users", (req, res) => {
                     passportSer: passportSer,
                     passportNum: passportNum,
                     telNumber: telNumber,
+                    address: address,
                     comment: comment !== "" ? [
                         {
                             id: uuid.v4(),
