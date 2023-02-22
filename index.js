@@ -121,12 +121,6 @@ app.get("/history", (req, res) => {
 })
 app.post("/history", (req, res) => {
     const historyJson = JSON.parse(fs.readFileSync("./data/History.json", "utf-8"))
-    const date = new Date()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    const year = date.getFullYear()
-    const hour = `${date.getHours()}:${date.getMinutes()}`
-    const fullDate = `${day < 10 ? "0" + day : day}/${month < 10 ? "0" + month : month}/${year}`
     const name = req.body.name
     const pages = req.body.page
 
@@ -135,8 +129,8 @@ app.post("/history", (req, res) => {
     } else {
         var newHistory = {
             name: name,
-            date: fullDate,
-            hour: hour,
+            day: req.body.day,
+            hour: req.body.hour,
             pages: pages
         }
         historyJson.unshift(newHistory)
