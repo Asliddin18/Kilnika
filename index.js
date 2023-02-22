@@ -255,14 +255,7 @@ app.post("/users", (req, res) => {
     const comment = req.body.comment
     const address = req.body.address
     const userId = uuid.v4()
-    const date = new Date()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    const year = date.getFullYear()
-    const hour = `${date.getHours()}:${date.getMinutes()}`
     const startDay = req.body.startDay
-    const stay = req.body.stay
-    const room = req.body.room
 
     if (username === "" || surname === "" || age === "" || telNumber === "") {
         res.status(400).send("Data Was not Fully Entered")
@@ -280,10 +273,7 @@ app.post("/users", (req, res) => {
                 address: address,
                 comment: comment !== "" ? [
                     {
-                        day: day,
-                        month: month,
-                        year: year,
-                        hour: hour,
+                        date: req.body.date,
                         poster: req.body.poster,
                         message: comment
                     }
@@ -291,60 +281,31 @@ app.post("/users", (req, res) => {
                 dedline: dedline === "" ? "" : dedline,
                 analiz: [],
                 skidka: 0,
-                startDay: [
-                    {
-                        userId: userId,
-                        username: username,
-                        surname: surname,
-                        started: "",
-                        stay: "",
-                        room: "",
-                        daily: "",
-                        money: req.body.money
-                    }
-                ],
+                startDay: [],
             }
         } else {
-            if (stay === '' || room === '') {
-                res.status(400).send("Stay or Room Was not Fully Entered")
-            } else {
-                var newUser = {
-                    id: userId,
-                    username: username,
-                    surname: surname,
-                    age: age,
-                    creator: creator,
-                    passportSer: passportSer,
-                    passportNum: passportNum,
-                    telNumber: telNumber,
-                    address: address,
-                    comment: comment !== "" ? [
-                        {
-                            id: uuid.v4(),
-                            day: day,
-                            month: month,
-                            year: year,
-                            hour: hour,
-                            poster: req.body.poster,
-                            message: comment
-                        }
-                    ] : [],
-                    dedline: dedline === "" ? "" : dedline,
-                    analiz: [],
-                    skidka: 0,
-                    startDay: [
-                        {
-                            userId: userId,
-                            username: username,
-                            surname: surname,
-                            started: startDay,
-                            stay: stay,
-                            room: room,
-                            daily: priceData[0].price,
-                            money: req.body.money
-                        }
-                    ],
-                }
+            var newUser = {
+                id: userId,
+                username: username,
+                surname: surname,
+                age: age,
+                creator: creator,
+                passportSer: passportSer,
+                passportNum: passportNum,
+                telNumber: telNumber,
+                address: address,
+                comment: comment !== "" ? [
+                    {
+                        id: uuid.v4(),
+                        date: req.body.date,
+                        poster: req.body.poster,
+                        message: comment
+                    }
+                ] : [],
+                dedline: dedline === "" ? "" : dedline,
+                analiz: [],
+                skidka: 0,
+                startDay: [],
             }
         }
         if (newUser !== undefined) {
@@ -479,19 +440,12 @@ app.get("/comment", (req, res) => {
 })
 app.post("/comment/:id", (req, res) => {
     var id = req.params.id
-    const date = new Date()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    const year = date.getFullYear()
-    const hour = `${date.getHours()}:${date.getMinutes()}`
 
     var data = {
         id: uuid.v4(),
         day: day,
         poster: req.body.poster,
-        month: month,
-        year: year,
-        hour: hour,
+        date: req.body.date,
         message: req.body.comment
     }
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
@@ -635,14 +589,12 @@ app.post("/room/set/:userId", (req, res) => {
             var starting = math.floor((new Date(UserData[i].startDay[j].started) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
             var myday = math.floor((new Date(day) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
             var finishing = starting + UserData[i].startDay[j].stay
-            if (starting-req.body.stay<= myday && myday < finishing && room == UserData[i].startDay[j].room) {
+            if (starting - req.body.stay <= myday && myday < finishing && room == UserData[i].startDay[j].room) {
                 count++
             }
         }
     }
-    if (count<=limit) {
-        console.log(count);
-        console.log(limit);
+    if (count <= limit) {
         for (let j = 0; j < UserData.length; j++) {
             if (UserData[j].id == userId) {
                 var post = {
@@ -660,7 +612,7 @@ app.post("/room/set/:userId", (req, res) => {
                 res.status(200).send("malumot joylandi")
             }
         }
-       
+
 
     } else {
         res.status(500).send("Siz kiritgan hona ayni vaqtda band")
