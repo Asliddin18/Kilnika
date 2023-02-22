@@ -244,7 +244,7 @@ app.post("/users", (req, res) => {
     const surname = req.body.surname
     const creator = req.body.creator
     const age = req.body.age
-    const passportSer = req.body.passwordSer
+    const passportSer = req.body.passportSer
     const passportNum = req.body.passportNum
     const telNumber = req.body.telNumber
     const dedline = req.body.dedline
@@ -268,6 +268,7 @@ app.post("/users", (req, res) => {
                 username: username,
                 surname: surname,
                 age: age,
+                creator: creator,
                 passportSer: passportSer,
                 passportNum: passportNum,
                 telNumber: telNumber,
