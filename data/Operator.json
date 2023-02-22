@@ -2,14 +2,18 @@
   {
     "id": "5a9f4b0a-deae-4bdf-8964-232551f2557b",
     "name": "abbas",
+    "surname": "Test",
     "password": "abbas11",
+    "telNumber": "+99891234456",
     "email": "abbas@",
     "category": "superAdmin"
   },
   {
     "id": "e81bbf2e-b978-4442-bf1f-fac6a5138e15",
     "name": "Test",
+    "surname": "Test",
     "password": "Testing123",
+    "telNumber": "+99891234456",
     "email": "gfdfg",
     "category": "admin"
   }
