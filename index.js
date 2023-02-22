@@ -588,12 +588,14 @@ app.post("/room/set/:userId", (req, res) => {
             var starting = math.floor((new Date(UserData[i].startDay[j].started) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
             var myday = math.floor((new Date(day) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
             var finishing = starting + UserData[i].startDay[j].stay
+            console.log(myday);
+            console.log(starting, finishing)
             if (starting - req.body.stay <= myday && myday < finishing && room == UserData[i].startDay[j].room) {
                 count++
             }
         }
     }
-    if (count <= limit) {
+    if (count < limit) {
         for (let j = 0; j < UserData.length; j++) {
             if (UserData[j].id == userId) {
                 var post = {
