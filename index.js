@@ -468,8 +468,6 @@ app.delete('/comment/:id', (req, res) => {
 
             }
         }
-
-
     }
 })
 app.get('/comment/month/:month', (req, res) => {
