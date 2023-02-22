@@ -52,6 +52,8 @@ app.put("/operator/:id", (req, res) => {
             req.body.name === "" ? item.name = item.name : item.name = req.body.name
             req.body.password === "" ? item.password = item.password : item.password = req.body.password
             req.body.email === "" ? item.email = item.email : item.email = req.body.email
+            req.body.telNumber === "" ? item.telNumber = item.telNumber : item.telNumber = req.body.telNumber
+            req.body.surname === "" ? item.surname = item.surname : item.surname = req.body.surname
         }
     })
 
