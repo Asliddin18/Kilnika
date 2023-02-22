@@ -242,7 +242,6 @@ app.get("/users", (req, res) => {
     res.status(200).send(UserData)
 })
 app.post("/users", (req, res) => {
-    const priceData = JSON.parse(fs.readFileSync("./data/Sum.json", "utf-8"))
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     const username = req.body.username
     const surname = req.body.surname
