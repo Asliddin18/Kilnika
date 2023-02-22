@@ -442,7 +442,6 @@ app.post("/comment/:id", (req, res) => {
 
     var data = {
         id: uuid.v4(),
-        day: day,
         poster: req.body.poster,
         date: req.body.date,
         message: req.body.comment
