@@ -268,6 +268,8 @@ app.post("/users", (req, res) => {
                     {
                         date: req.body.date,
                         poster: req.body.poster,
+                        date: req.body.date,
+                        hour: req.body.hour,
                         message: comment
                     }
                 ] : [],
@@ -289,9 +291,10 @@ app.post("/users", (req, res) => {
                 address: address,
                 comment: comment !== "" ? [
                     {
-                        id: uuid.v4(),
                         date: req.body.date,
                         poster: req.body.poster,
+                        date: req.body.date,
+                        hour: req.body.hour,
                         message: comment
                     }
                 ] : [],
@@ -433,13 +436,14 @@ app.get("/comment", (req, res) => {
 })
 app.post("/comment/:id", (req, res) => {
     var id = req.params.id
-
     var data = {
         id: uuid.v4(),
         poster: req.body.poster,
         date: req.body.date,
+        hour: req.body.hour,
         message: req.body.comment
     }
+
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     UserData.map((item, key) => {
         if (item.id == id) {
