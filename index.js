@@ -266,6 +266,9 @@ app.post("/users", (req, res) => {
                 address: address,
                 comment: comment !== "" ? [
                     {
+                        id: userId,
+                        username: username,
+                        surname: surname,
                         date: req.body.date,
                         poster: req.body.poster,
                         date: req.body.date,
@@ -291,6 +294,9 @@ app.post("/users", (req, res) => {
                 address: address,
                 comment: comment !== "" ? [
                     {
+                        id: userId,
+                        username: username,
+                        surname: surname,
                         date: req.body.date,
                         poster: req.body.poster,
                         date: req.body.date,
@@ -437,6 +443,9 @@ app.get("/comment", (req, res) => {
 app.post("/comment/:id", (req, res) => {
     var id = req.params.id
     var data = {
+        id: id,
+        username: username,
+        surname: surname,
         id: uuid.v4(),
         poster: req.body.poster,
         date: req.body.date,
