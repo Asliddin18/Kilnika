@@ -24,7 +24,7 @@ app.post("/operator", (req, res) => {
     const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json", "utf-8"))
     const post = req.body
 
-    if (post.name === "" || post.password === "" || post.email === "" || post.surname) {
+    if (post.name === "" || post.password === "" || post.email === "" || post.surname === "") {
         res.status(400).send("The Information Was Not Fully Entered")
     } else {
         const newOper = {
