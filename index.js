@@ -36,7 +36,7 @@ app.post("/operator", (req, res) => {
             telNumber: post.telNumber,
             category: "admin"
         }
-        operatorJson.push(newOper)
+        operatorJson.unshift(newOper)
         fs.writeFileSync("./data/Operator.json", JSON.stringify(operatorJson, null, 2))
         res.status(201).send("Operator Created")
     }
@@ -184,7 +184,7 @@ app.post("/room", (req, res) => {
             limit: ReqBody.limit,
             persons: []
         }
-        roomJson.push(newRoom)
+        roomJson.unshift(newRoom)
         res.status(200).send("The Room Has Been Created")
         fs.writeFileSync("./data/Room.json", JSON.stringify(roomJson, null, 2))
     }
@@ -306,7 +306,7 @@ app.post("/users", (req, res) => {
         }
         if (newUser !== undefined) {
             res.status(201).send("User Has Been Created")
-            UserData.push(newUser)
+            UserData.unshift(newUser)
             fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
         }
     }
@@ -379,7 +379,7 @@ app.post("/users/analiz/:id", (req, res) => {
 
             UserData.map(item => {
                 if (item.id === ReqId) {
-                    item.analiz.push(newObj)
+                    item.analiz.unshift(newObj)
                     fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
                 }
             })
@@ -397,7 +397,7 @@ app.delete("/users/analiz/:id", (req, res) => {
     //         if(item.id === ReqId) {
     //             deleteAnaliz = true
     //             const filterJson = UserData[i].analiz.filter(c => c.id !== item.id)
-    //             UserData[i].analiz.push(filterJson)
+    //             UserData[i].analiz.unshift(filterJson)
     //             fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
     //         }
     //     })
@@ -428,7 +428,7 @@ app.get("/comment", (req, res) => {
     var comments = []
     for (var i = 0; i < UserData.length; i++) {
         for (let j = 0; j < UserData[i].comment.length; j++) {
-            comments.push(UserData[i].comment[j])
+            comments.unshift(UserData[i].comment[j])
         }
     }
 
@@ -447,7 +447,7 @@ app.post("/comment/:id", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     UserData.map((item, key) => {
         if (item.id == id) {
-            item.comment.push(data)
+            item.comment.unshift(data)
         }
     })
     fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
@@ -479,7 +479,7 @@ app.get('/comment/month/:month', (req, res) => {
     for (var i = 0; i < UserData.length; i++) {
         for (let j = 0; j < UserData[i].comment.length; j++) {
             if (UserData[i].comment[j].year == year && UserData[i].comment[j].month == month) {
-                comments.push(UserData[i].comment[j])
+                comments.unshift(UserData[i].comment[j])
             }
         }
     }
@@ -493,7 +493,7 @@ app.get('/comment/year/:year', (req, res) => {
     for (var i = 0; i < UserData.length; i++) {
         for (let j = 0; j < UserData[i].comment.length; j++) {
             if (UserData[i].comment[j].year == year) {
-                comments.push(UserData[i].comment[j])
+                comments.unshift(UserData[i].comment[j])
             }
         }
     }
@@ -508,7 +508,7 @@ app.get('/comment/poster/:poster/month/:month', (req, res) => {
     for (var i = 0; i < UserData.length; i++) {
         for (let j = 0; j < UserData[i].comment.length; j++) {
             if (UserData[i].comment[j].poster == poster && UserData[i].comment[j].month == month) {
-                comments.push(UserData[i].comment[j])
+                comments.unshift(UserData[i].comment[j])
             }
         }
     }
@@ -524,7 +524,7 @@ app.get("/comment/day/:day", (req, res) => {
     for (var i = 0; i < UserData.length; i++) {
         for (let j = 0; j < UserData[i].comment.length; j++) {
             if (UserData[i].comment[j].year == year && UserData[i].comment[j].month == month && UserData[i].comment[j].day == day) {
-                comments.push(UserData[i].comment[j])
+                comments.unshift(UserData[i].comment[j])
             }
         }
     }
@@ -546,14 +546,14 @@ app.get("/room/set/:date", (req, res) => {
             var myday = math.floor((new Date(day) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
             var finishing = starting + UserData[i].startDay[j].stay
             if (starting <= myday && myday < finishing) {
-                a.push(UserData[i].startDay[j])
+                a.unshift(UserData[i].startDay[j])
             }
         }
     }
     for (let i = 0; i < roomJson.length; i++) {
         for (let j = 0; j < a.length; j++) {
             if (a[j].room == roomJson[i].number) {
-                roomJson[i].persons.push(a[j])
+                roomJson[i].persons.unshift(a[j])
             }
         }
         // fs.writeFileSync("./data/Room.json", JSON.stringify(roomJson, null, 2))
@@ -594,6 +594,7 @@ app.post("/room/set/:userId", (req, res) => {
         for (let j = 0; j < UserData.length; j++) {
             if (UserData[j].id == userId) {
                 var post = {
+                    "id":uuid.v4(),
                     "userId": UserData[j].id,
                     "username": UserData[j].username,
                     "surname": UserData[j].surname,
@@ -603,7 +604,7 @@ app.post("/room/set/:userId", (req, res) => {
                     "daily": price[0].price,
                     "money": req.body.money
                 }
-                UserData[j].startDay.push(post)
+                UserData[j].startDay.unshift(post)
                 fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
                 res.status(200).send("malumot joylandi")
             }
@@ -616,7 +617,24 @@ app.post("/room/set/:userId", (req, res) => {
 
 
 })
-
+app.delete('/room/set/:id',(req,res)=>{
+id=req.params.id
+const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+var n=false
+for (let i = 0; i < UserData.length; i++) {
+for (let j = 0; j < UserData[i].startDay.length; j++) {
+if(UserData[i].startDay[j].id==id){
+    UserData[i].startDay.splice(j,1)
+n=true
+}}}
+if(n){
+res.status(201).send('O`chirib tashlandi')
+}else{
+res.status(403).send("siz bergan id serverda aniqlanmadi")
+}})
+app.put('/room/set/:id',(req,res)=>{
+var id=req.params.id 
+})
 
 app.listen(8080, () => {
     console.log("The Server is Running");
