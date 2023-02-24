@@ -106,7 +106,7 @@ app.post("/login", (req, res) => {
     operatorJson.map(item => {
         if (item.name === req.body.username && item.password === req.body.password) {
             postToken = true
-        }4
+        } 4
     })
     if (postToken === true) {
         res.status(200).send(accesToken)
@@ -450,19 +450,8 @@ app.delete("/users/analiz/:id", (req, res) => {
     // }
 })
 app.get("/analizDownload/:id", (req, res) => {
-    const ID = req.params.id
-    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
-    var analizs = []
-    for (var i = 0; i < UserData.length; i++) {
-        for (let j = 0; j < UserData[i].analiz.length; j++) {
-            analizs.unshift(UserData[i].analiz[j])
-        }
-    }
-    analizs.map(item => {
-        if(item.id === ID) {
-            res.download(item.analizFile)
-        }
-    })
+    const id = req.params.id
+    res.download(`public/${id}`)
 })
 
 /* comment */
@@ -620,13 +609,13 @@ app.post('/dedline/:id', (req, res) => {
             key = true
         }
     }
- 
-if (key) {
-    res.status(200).send('qongiroq qilish sanasi o`chirildi')
-    fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
-}else{
-res.status(403).send("siz kiritgan id tori kelmadi")
-}
+
+    if (key) {
+        res.status(200).send('qongiroq qilish sanasi o`chirildi')
+        fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
+    } else {
+        res.status(403).send("siz kiritgan id tori kelmadi")
+    }
 
 })
 app.put('/dedline/:id', (req, res) => {
