@@ -478,6 +478,7 @@ app.get("/comment", (req, res) => {
 })
 app.post("/comment/:id", (req, res) => {
     var id = req.params.id
+
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     UserData.map((item, key) => {
         if (item.id == id) {
@@ -618,11 +619,13 @@ app.post('/dedline/:id', (req, res) => {
             key = true
         }
     }
-    if (key) {
-        res.status(200).send('qongiroq qilish sanasi o`chirildi')
-    } else {
-        res.status(403).send("siz kiritgan id tori kelmadi")
-    }
+ 
+if (key) {
+    res.status(200).send('qongiroq qilish sanasi o`chirildi')
+    fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
+}else{
+res.status(403).send("siz kiritgan id tori kelmadi")
+}
 
 })
 app.put('/dedline/:id', (req, res) => {
@@ -638,6 +641,7 @@ app.put('/dedline/:id', (req, res) => {
     }
     if (key) {
         res.status(200).send('qongiroq qilish sanasi o`chirildi')
+        fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
     } else {
         res.status(403).send("siz kiritgan id tori kelmadi")
     }
