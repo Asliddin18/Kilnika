@@ -460,7 +460,7 @@ app.get("/analizDownload/:id", (req, res) => {
     }
     analizs.map(item => {
         if(item.id === ID) {
-            res.send(`${__dirname}/public/${item.analizFile}`)
+            res.send(item.analizFile)
         }
     })
 })
