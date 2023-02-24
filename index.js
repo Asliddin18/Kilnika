@@ -604,6 +604,24 @@ app.post('/dedline/:id', (req, res) => {
     }
 
 })
+app.put('/dedline/:id', (req, res) => {
+    var id = req.params.id
+    var data=req.body.dedline
+    var key = false
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    for (let i = 0; i < UserData.length; i++) {
+        if (id == UserData[i].id) {
+            UserData[i].dedline = data
+            key = true
+        }
+    }
+    if (key) {
+        res.status(200).send('qongiroq qilish sanasi o`chirildi')
+    } else {
+        res.status(403).send("siz kiritgan id tori kelmadi")
+    }
+
+})
 app.get("/room/set/:date", (req, res) => {
     var day = req.params.date;
     var oneDay = 1000 * 60 * 60 * 24;
