@@ -540,7 +540,56 @@ app.get("/comment/day/:day", (req, res) => {
     console.log();
     res.status(200).send(comments)
 })
+app.get('/dedline',(req,res)=>{
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    var oneDay = 1000 * 60 * 60 * 24;
+    var now = new Date()
+    var  day = now.getDate();
+    var month = now.getMonth() + 1; 
+    var year = now.getFullYear();
+    var b=month + "-" + day+ "-"+year ;
+    var getdata=[]
+    for (let i = 0; i < UserData.length; i++) {
+        var starting = math.floor((new Date(UserData[i].dedline) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
+        var myday = math.floor((new Date(b) - new Date(now.getFullYear() - 1, 0, 0)) / oneDay)
+        if (UserData[i].dedline && starting-myday<10){
 
+var mal={
+    "id": UserData[i].id,
+    "username": UserData[i].username,
+    "surname": UserData[i].surname,
+    "age": UserData[i].age,
+    "passportNum": UserData[i].passportNum,
+    "telNumber": UserData[i].telNumber,
+    "dedline": UserData[i].dedline,
+    "finishday":starting-myday,
+    "comment": UserData[i].comment
+}
+getdata.push(mal)
+       }
+    }
+
+res.status(200).send(getdata)
+
+
+})
+app.post('/dedline/:id',(req,res)=>{
+    var id=req.params.id
+    var key=false
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    for (let i = 0; i < UserData.length; i++) {
+         if(id==UserData[i].id){
+            UserData[i].dedline=false
+            key=true
+         }
+    }
+if (key) {
+    res.status(200).send('qongiroq qilish sanasi o`chirildi')
+}else{
+res.status(403).send("siz kiritgan id tori kelmadi")
+}
+
+})
 app.get("/room/set/:date", (req, res) => {
     var day = req.params.date;
     var oneDay = 1000 * 60 * 60 * 24;
