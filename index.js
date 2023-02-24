@@ -12,6 +12,7 @@ require("dotenv").config()
 
 app.use(cors())
 app.use(upload())
+app.use(express.static("public"))
 
 
 /* start Operator */
