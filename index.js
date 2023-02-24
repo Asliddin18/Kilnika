@@ -448,29 +448,20 @@ app.delete("/users/analiz/:id", (req, res) => {
     //     res.status(400).send("Id Not Found")
     // }
 })
-
-app.put('/users/analiz/:id', (req, res) => {
-    var id = req.params.id
-    var data = req.body.analizName
-    var key = false
-
+app.get("/analizDownload/:id", (req, res) => {
+    const ID = req.params.id
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
-    for (let i = 0; i < UserData.length; i++) {
+    var analizs = []
+    for (var i = 0; i < UserData.length; i++) {
         for (let j = 0; j < UserData[i].analiz.length; j++) {
-            if (id === UserData[i].analiz[j].id) {
-                key = true
-                UserData[i].analiz[j].analizName = data
-                fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
-            }
+            analizs.unshift(UserData[i].analiz[j])
         }
-
     }
-    if (key) {
-        res.status(200).send('Analiz Ozgartirildi')
-    } else {
-        res.status(403).send("O'zgartirilmadi")
-    }
-
+    analizs.map(item => {
+        if(item.id === ID) {
+            res.download(`${__dirname}/public/${item.analizFile}`)
+        }
+    })
 })
 
 /* comment */
@@ -487,20 +478,19 @@ app.get("/comment", (req, res) => {
 })
 app.post("/comment/:id", (req, res) => {
     var id = req.params.id
-    var data = {
-        id: id,
-        username: username,
-        surname: surname,
-        id: uuid.v4(),
-        poster: req.body.poster,
-        date: req.body.date,
-        hour: req.body.hour,
-        message: req.body.comment
-    }
-
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     UserData.map((item, key) => {
         if (item.id == id) {
+            var data = {
+                id: id,
+                username: item.username,
+                surname: item.surname,
+                id: uuid.v4(),
+                poster: req.body.poster,
+                date: req.body.date,
+                hour: req.body.hour,
+                message: req.body.comment
+            }
             item.comment.unshift(data)
         }
     })
