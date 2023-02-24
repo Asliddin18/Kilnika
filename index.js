@@ -24,7 +24,7 @@ app.post("/operator", (req, res) => {
     const operatorJson = JSON.parse(fs.readFileSync("./data/Operator.json", "utf-8"))
     const post = req.body
 
-    if (post.name === "" || post.password === "" || post.email === "" || post.surname) {
+    if (post.name === "" || post.password === "" || post.email === "" || post.surname === "") {
         res.status(400).send("The Information Was Not Fully Entered")
     } else {
         const newOper = {
@@ -335,7 +335,7 @@ app.delete("/users/:id", (req, res) => {
         res.status(200).send("The User is Deleted")
     }
 })
-/* app.put("/users/:id", (req, res) => {
+app.put("/users/:id", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     const ReqId = req.params.id
     const ReqBody = req.body
@@ -344,16 +344,26 @@ app.delete("/users/:id", (req, res) => {
     for (let i = 0; i < UserData.length; i++) {
         if(UserData[i].id === ReqId) {
             filterId = true
-            
+            ReqBody.username === "" ? UserData[i].username = UserData[i].username : UserData[i].username = ReqBody.username
+            ReqBody.surname === "" ? UserData[i].surname = UserData[i].surname : UserData[i].surname = ReqBody.surname
+            ReqBody.age === "" ? UserData[i].age = UserData[i].age : UserData[i].age = ReqBody.age
+            ReqBody.passportSer === "" ? UserData[i].passportSer = UserData[i].passportSer : UserData[i].passportSer = ReqBody.passportSer
+            ReqBody.passportNum === "" ? UserData[i].passportNum = UserData[i].passportNum : UserData[i].passportNum = ReqBody.passportNum
+            ReqBody.telNumber === "" ? UserData[i].telNumber = UserData[i].telNumber : UserData[i].telNumber = ReqBody.telNumber
+            ReqBody.dedline === "" ? UserData[i].dedline = UserData[i].dedline : UserData[i].dedline = ReqBody.dedline
+            ReqBody.address === "" ? UserData[i].address = UserData[i].address : UserData[i].address = ReqBody.address
+
+            fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
         }
     }
+
     if(filterId == false) {
         res.status(400).send("Id Not Found")
     } else {
         res.status(200).send("User Edited")
     }
 })
- */
+
 
 /* analiz */
 app.post("/users/analiz/:id", (req, res) => {
