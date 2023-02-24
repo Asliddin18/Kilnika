@@ -368,7 +368,9 @@ app.put("/users/:id", (req, res) => {
 /* analiz */
 app.get("/users/analiz", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
-    res.status(200).send(UserData)
+    UserData.map(item => {
+        res.status(200).send(item.analiz)
+    })
 })
 app.post("/users/analiz/:id", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
