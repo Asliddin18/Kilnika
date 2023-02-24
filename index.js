@@ -368,9 +368,14 @@ app.put("/users/:id", (req, res) => {
 /* analiz */
 app.get("/users/analiz", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
-    UserData.map(item => {
-        res.status(200).send(item.analiz)
-    })
+    var analizs = []
+    for (var i = 0; i < UserData.length; i++) {
+        for (let j = 0; j < UserData[i].analiz.length; j++) {
+            analizs.unshift(UserData[i].analiz[j])
+        }
+    }
+
+    res.status(200).send(analizs)
 })
 app.post("/users/analiz/:id", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))

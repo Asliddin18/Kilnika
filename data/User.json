@@ -8,7 +8,15 @@
     "telNumber": "+99891234567",
     "comment": [],
     "dedline": "02-18-2023",
-    "analiz": [],
+    "analiz": [
+      {
+        "id": "84dac7e8-680d-4175-9841-4da5bc3e7b79",
+        "analizName": "401",
+        "username": "eshmat",
+        "surname": "toshmatov",
+        "analizFile": "1677240736817close.png"
+      }
+    ],
     "skidka": 0,
     "startDay": [
       {
@@ -31,8 +39,16 @@
     "passportNum": "303003",
     "telNumber": "+123456789",
     "comment": [],
-    "dedline":  "03-05-2023",
-    "analiz": [],
+    "dedline": "03-05-2023",
+    "analiz": [
+      {
+        "id": "5419b736-36f6-4450-8214-4d9de3068371",
+        "analizName": "401",
+        "username": "salom",
+        "surname": "ok",
+        "analizFile": "1677241354060close.png"
+      }
+    ],
     "skidka": 0,
     "startDay": [
       {
