@@ -106,7 +106,7 @@ app.post("/login", (req, res) => {
     operatorJson.map(item => {
         if (item.name === req.body.username && item.password === req.body.password) {
             postToken = true
-        }
+        }4
     })
     if (postToken === true) {
         res.status(200).send(accesToken)
@@ -460,7 +460,7 @@ app.get("/analizDownload/:id", (req, res) => {
     }
     analizs.map(item => {
         if(item.id === ID) {
-            res.send(item.analizFile)
+            res.download(item.analizFile)
         }
     })
 })
