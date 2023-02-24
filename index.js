@@ -449,6 +449,30 @@ app.delete("/users/analiz/:id", (req, res) => {
     // }
 })
 
+app.put('/users/analiz/:id', (req, res) => {
+    var id = req.params.id
+    var data = req.body.analizName
+    var key = false
+
+    const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
+    for (let i = 0; i < UserData.length; i++) {
+        for (let j = 0; j < UserData[i].analiz.length; j++) {
+            if (id === UserData[i].analiz[j].id) {
+                key = true
+                UserData[i].analiz[j].analizName = data
+                fs.writeFileSync("./data/User.json", JSON.stringify(UserData, null, 2))
+            }
+        }
+
+    }
+    if (key) {
+        res.status(200).send('Analiz Ozgartirildi')
+    } else {
+        res.status(403).send("O'zgartirilmadi")
+    }
+
+})
+
 /* comment */
 app.get("/comment", (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
@@ -613,7 +637,7 @@ app.post('/dedline/:id', (req, res) => {
 })
 app.put('/dedline/:id', (req, res) => {
     var id = req.params.id
-    var data=req.body.dedline
+    var data = req.body.dedline
     var key = false
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     for (let i = 0; i < UserData.length; i++) {
