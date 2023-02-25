@@ -566,6 +566,7 @@ app.get("/comment/day/:day", (req, res) => {
     console.log();
     res.status(200).send(comments)
 })
+
 app.get('/dedline', (req, res) => {
     const UserData = JSON.parse(fs.readFileSync("./data/User.json", "utf-8"))
     var oneDay = 1000 * 60 * 60 * 24;
@@ -637,6 +638,7 @@ app.put('/dedline/:id', (req, res) => {
     }
 
 })
+
 app.get("/room/set/:date", (req, res) => {
     var day = req.params.date;
     var oneDay = 1000 * 60 * 60 * 24;
