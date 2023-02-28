@@ -9,7 +9,7 @@ const authenticateToken = require("./Auth")
 const app = express()
 require("dotenv").config()
 // const Math =require('Math')
-
+var ACCESS_TOKEN_SECRET = "963d48d8a5bbe8acd67458646d5d469f45bfda4b75629e20944efa56a24d32201c16c005da46b2fd7f8867fbf589541e957f51bbe19b3a9c6dd1c3aa473bba7e"
 app.use(cors())
 app.use(upload())
 app.use(express.static("public"))
@@ -101,7 +101,7 @@ app.post("/login", (req, res) => {
     const username = req.body.username
     const password = req.body.password
 
-    const accesToken = jwt.sign(username, process.env.ACCESS_TOKEN_SECRET)
+    const accesToken = jwt.sign(username, ACCESS_TOKEN_SECRET)
 
     operatorJson.map(item => {
         if (item.name === req.body.username && item.password === req.body.password) {
